@@ -9,7 +9,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")                        // для всех путей
-                .allowedOrigins("http://localhost:3000", "http://onliver.ru", "https://onliver.ru")  // доверенный origin
+                .allowedOrigins("http://localhost:3000", "http://onliver.ru:8080", "https://onliver.ru:8080", "http://onliver.ru", "https://onliver.ru")  // доверенный origin
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
                 .allowCredentials(true);                 // если нужны куки/авторизация
