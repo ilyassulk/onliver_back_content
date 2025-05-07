@@ -8,6 +8,8 @@ import io.minio.http.Method;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
 
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -40,6 +42,7 @@ public class MinioUrlUtil {
     }
 
     private String getObjectUrl(String objName, String bucket){
+        ignoreSecure();
         String presignedUrl;
         try {
             presignedUrl = minioClient.getPresignedObjectUrl(
@@ -58,6 +61,7 @@ public class MinioUrlUtil {
     }
 
     private String getUploadUrl(String objName, String bucket) {
+        ignoreSecure();
         String presignedUrl;
         try {
             presignedUrl = minioClient.getPresignedObjectUrl(
@@ -76,6 +80,7 @@ public class MinioUrlUtil {
     }
 
     public void createBucketIfNotExists(String bucketName) {
+        ignoreSecure();
         try {
             boolean exists = minioClient.bucketExists(
                     BucketExistsArgs.builder()
@@ -95,6 +100,16 @@ public class MinioUrlUtil {
         } catch (Exception e) {
             // логируем и при необходимости пробрасываем или обрабатываем
             System.err.println("Error checking/creating bucket '" + bucketName + "': " + e.getMessage());
+        }
+    }
+
+    public void ignoreSecure(){
+        try {
+            minioClient.ignoreCertCheck();
+        } catch (KeyManagementException e) {
+            throw new RuntimeException(e);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
         }
     }
 }
