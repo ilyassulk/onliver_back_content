@@ -26,7 +26,7 @@ public class MinioUrlUtil {
         return getObjectUrl(objName, contentBucket);
     }
 
-    @Cacheable(value = "avatars", key = "#objName")
+    //@Cacheable(value = "avatars", key = "#objName")
     public String getAvatarUrl(String objName){
         return getObjectUrl(objName, avatarBucket);
     }
