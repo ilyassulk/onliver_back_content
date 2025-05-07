@@ -5,7 +5,7 @@ services:
     image: isdockero/onliver-content-manager:latest
     ports:
       - target: 8080
-        published: 1234
+        published: 1235
         protocol: tcp
     networks:
       - service-network
