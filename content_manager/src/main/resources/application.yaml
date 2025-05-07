@@ -19,7 +19,7 @@ spring:
       port: 6379
 
 minio:
-  endpoint: http://onliver.ru:9443
+  endpoint: https://onliver.ru:9443
   access-key: minioadmin
   secret-key: minioadmin
   bucket-name:
