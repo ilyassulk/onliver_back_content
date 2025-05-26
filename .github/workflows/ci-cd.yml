@@ -78,3 +78,5 @@ jobs:
             echo "Deploying new stack..."
             ls
             sudo docker stack deploy --detach=true -c ~/deploy/docker-compose.yaml onliver_content_stack
+
+# Гит лежит, мб прокнет если запушить
