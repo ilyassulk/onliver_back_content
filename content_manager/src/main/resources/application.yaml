@@ -3,8 +3,8 @@ spring:
     name: content_manager
   datasource:
     url: jdbc:postgresql://onliver.ru:5432/onliver_content
-    username: postgres
-    password: postgres
+    username: onliveradmin
+    password: onliveradmin
   jpa:
     properties:
       hibernate:
