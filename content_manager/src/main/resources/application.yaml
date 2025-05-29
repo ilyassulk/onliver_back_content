@@ -31,3 +31,7 @@ minio:
   bucket-name:
     content: content
     avatar: avatar
+
+logging:
+  level:
+    root: DEBUG
