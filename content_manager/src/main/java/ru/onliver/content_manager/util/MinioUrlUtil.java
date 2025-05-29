@@ -6,6 +6,7 @@ import io.minio.MakeBucketArgs;
 import io.minio.MinioClient;
 import io.minio.http.Method;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 
 import java.security.KeyManagementException;
@@ -28,9 +29,16 @@ public class MinioUrlUtil {
         return getObjectUrl(objName, contentBucket);
     }
 
-    //@Cacheable(value = "avatars", key = "#objName")
+    @Cacheable(value = "avatars", key = "#objName", unless = "#result.isEmpty()")
     public String getAvatarUrl(String objName){
-        return getObjectUrl(objName, avatarBucket);
+        log.debug("Generating avatar URL for object: {}", objName);
+        String url = getObjectUrl(objName, avatarBucket);
+        if (!url.isEmpty()) {
+            log.debug("Avatar URL generated and cached for object: {}", objName);
+        } else {
+            log.warn("Failed to generate avatar URL for object: {}", objName);
+        }
+        return url;
     }
 
     public String getAvatarUploadUrl(String objName) {
@@ -111,5 +119,15 @@ public class MinioUrlUtil {
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @CacheEvict(value = "avatars", key = "#objName")
+    public void evictAvatarCache(String objName) {
+        log.debug("Evicting avatar cache for object: {}", objName);
+    }
+
+    @CacheEvict(value = "avatars", allEntries = true)
+    public void evictAllAvatarCache() {
+        log.debug("Evicting all avatar cache entries");
     }
 }

@@ -17,6 +17,12 @@ spring:
     redis:
       host: onliver.ru
       port: 6379
+      timeout: 2000ms
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
 
 minio:
   endpoint: https://onliver.ru:9443
